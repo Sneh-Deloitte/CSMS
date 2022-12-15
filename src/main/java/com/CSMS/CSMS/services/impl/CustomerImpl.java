@@ -1,5 +1,6 @@
 package com.CSMS.CSMS.services.impl;
 
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
 import com.CSMS.CSMS.Repository.CustomerRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Customer;
@@ -7,6 +8,7 @@ import com.CSMS.CSMS.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -14,8 +16,20 @@ public class CustomerImpl implements CustomerService {
     @Autowired
     private CustomerRepo customerRepo;
 
+    @Autowired
+    private ApiService apiService;
+
     @Override
     public Customer createCustomer(Customer customer) {
+        // String expiryTime=booking.getDate()+"T"+booking.getEnd_time()+":00";
+        HashMap<String,String> store = new HashMap<>();
+        store.put("idTag", customer.getocpp_tag());
+        store.put("parentIdTag",customer.getParentIdTag());
+        store.put("expiryDate",customer.getdate());
+        store.put("note", "Added");
+        store.put("maxActiveTransactionCount","99");
+        String getResult= apiService.addOcppTag(store);
+        System.out.println(getResult);
         return customerRepo.save(customer);
     }
 
@@ -29,7 +43,9 @@ public class CustomerImpl implements CustomerService {
         if(customer1.getCustomer_nationality() != null)customer1.setCustomer_nationality(customer.getCustomer_nationality());
         if(customer1.getCustomer_firstName() != null)customer1.setCustomer_firstName(customer.getCustomer_firstName());
         if(customer1.getCustomer_lastName() != null)customer1.setCustomer_lastName(customer.getCustomer_lastName());
+
         return customerRepo.save(customer1);
+
     }
 
     @Override

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// import java.time.String;
+
 import javax.persistence.*;
 
 @Entity
@@ -27,8 +29,10 @@ public class Customer {
     private String customer_nationality;
     private int customer_phone;
     private String ocpp_tag;
+    private String parentIdTag;
+    private String date;
 
-    public Customer(Long id, String role_id, String customer_email, String customer_firstName, String customer_lastName, int dob_customer, String customer_gender, String customer_nationality, int customer_phone, String ocpp_tag) {
+    public Customer(String date, String parentIdTag, Long id, String role_id, String customer_email, String customer_firstName, String customer_lastName, int dob_customer, String customer_gender, String customer_nationality, int customer_phone, String ocpp_tag) {
         this.id = id;
         this.role_id = role_id;
         this.customer_email = customer_email;
@@ -39,6 +43,8 @@ public class Customer {
         this.customer_nationality = customer_nationality;
         this.customer_phone = customer_phone;
         this.ocpp_tag = ocpp_tag;
+        this.parentIdTag = parentIdTag;
+        this.date= date;
     }
 
     public Long getId() {
@@ -119,5 +125,20 @@ public class Customer {
 
     public void setocpp_tag(String ocpp_tag) {
         this.ocpp_tag = ocpp_tag;
+    }
+
+    public String getparent_ocpp_tag() {
+        return parentIdTag;
+    }
+
+    public void setparent_ocpp_tag(String parentIdTag) {
+        this.parentIdTag = parentIdTag;
+    }
+    public String getdate() {
+        return date;
+    }
+
+    public void setdate(String date) {
+        this.date = date;
     }
 }

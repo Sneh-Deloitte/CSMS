@@ -43,6 +43,30 @@ public class ApiService {
         return result.getBody();
     }
 
+    // public String cancelReservation(HashMap<String,String> reserveNowParams){
+    //     String url = API_URL+"/reserveCancel";
+
+    //     HttpHeaders headers = new HttpHeaders();
+    //     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    //     JSONObject jsonObject = null;
+
+    //     ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, reserveNowParams, String.class);
+    //     System.out.println(result);
+    //     return result.getBody();
+    // }
+
+    public String addOcppTag(HashMap<String, String> store){
+        String url = API_URL+"/ocppTags";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        JSONObject jsonObject = null;
+
+        ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, store, String.class);
+        System.out.println(result);
+        return result.getBody();
+    }
+
 
     public List<OcppJsonStatus> getActiveChargers(){
         String url = API_URL+"/connectedChargePoint";
