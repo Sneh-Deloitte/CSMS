@@ -23,8 +23,8 @@ public class BookingImpl implements BookingService {
         try {
             String[] start = booking.getStart_time().split(":", 2);
             String[] end = booking.getEnd_time().split(":", 2);
-            String[] date= booking.getDate().split("/",3);
-            if (date[0].length()!=2 || date[1].length()!=2 || date[2].length()!=4 || booking.getDate().length()!=10){
+            String[] date= booking.getDate().split("-",3);
+            if (date[0].length()!=4 || date[1].length()!=2 || date[2].length()!=2 || booking.getDate().length()!=10){
                 throw new NotFoundException("Date isn't as expected");
             }
             String booking_id =booking.setBooking_id(RandomString.getAlphaNumericString(8));

@@ -1,38 +1,64 @@
 package com.CSMS.CSMS.Controllers;
 
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
+import com.CSMS.CSMS.ConsumeAPI.dto.ChargePointSelect;
+import com.CSMS.CSMS.ConsumeAPI.dto.ReserveNowParams;
 import com.CSMS.CSMS.Repository.BookingRepo;
-import com.CSMS.CSMS.models.ActiveReservation;
-import com.CSMS.CSMS.models.Booking;
+import com.CSMS.CSMS.Repository.ChargerRepo;
+import com.CSMS.CSMS.Repository.ConnectorRepo;
+import com.CSMS.CSMS.Repository.CustomerRepo;
+import com.CSMS.CSMS.exception.NotFoundException;
+import com.CSMS.CSMS.models.*;
 import com.CSMS.CSMS.services.ActiveReservationService;
 import com.CSMS.CSMS.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.print.Book;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+import static com.CSMS.CSMS.ConsumeAPI.dto.OcppTransport.JSON;
+
 @RestController
 public class BookingController {
 
     @Autowired
     private BookingRepo bookingRepo;
+
+    @Autowired
+    private ChargerRepo chargerRepo;
+
+    @Autowired
+    private CustomerRepo customerRepo;
+
+    @Autowired
+    private ConnectorRepo connectorRepo;
+
     @Autowired
     private BookingService bookingService;
 
     @Autowired
     private ActiveReservationService activeReservationService;
 
+    @Autowired
+    private  ApiService apiService;
+
+
+
     @PostMapping("/createBooking")
     public Booking createBooking(@RequestBody Booking booking){
-        // We will call central station api for reservation
-        Booking booking1 = bookingService.createBooking(booking);
 
-        ActiveReservation activeReservation = new ActiveReservation(booking1.getId());
-        activeReservationService.addActiveReservation(activeReservation);
 
-        return booking1;
+
+                //store in csms database
+                Booking booking1 = bookingService.createBooking(booking);
+
+                //to store in active reservation
+                ActiveReservation activeReservation = new ActiveReservation(booking1.getId());
+                activeReservationService.addActiveReservation(activeReservation);
+                return  booking1;
     }
 
     @DeleteMapping("/deleteBooking/{id}")

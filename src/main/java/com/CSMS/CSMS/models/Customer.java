@@ -25,10 +25,10 @@ public class Customer {
     private int dob_customer;
     private String customer_gender;
     private String customer_nationality;
-    private Long customer_phone;
+    private int customer_phone;
     private String ocpp_tag;
 
-    public Customer(Long id, String role_id, String customer_email, String customer_firstName, String customer_lastName, int dob_customer, String customer_gender, String customer_nationality, Long customer_phone, String ocpp_tag) {
+    public Customer(Long id, String role_id, String customer_email, String customer_firstName, String customer_lastName, int dob_customer, String customer_gender, String customer_nationality, int customer_phone, String ocpp_tag) {
         this.id = id;
         this.role_id = role_id;
         this.customer_email = customer_email;
@@ -105,11 +105,11 @@ public class Customer {
         this.customer_nationality = customer_nationality;
     }
 
-    public Long getCustomer_phone() {
+    public int getCustomer_phone() {
         return customer_phone;
     }
 
-    public void setCustomer_phone(Long customer_phone) {
+    public void setCustomer_phone(int customer_phone) {
         this.customer_phone = customer_phone;
     }
 

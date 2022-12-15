@@ -1,6 +1,8 @@
 package com.CSMS.CSMS.Controllers;
 
 
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
+import com.CSMS.CSMS.ConsumeAPI.dto.OcppJsonStatus;
 import com.CSMS.CSMS.Repository.StationRepo;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Station;
@@ -12,17 +14,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 public class StationController {
 
     @Autowired
+    private StationRepo stationRepo;
+
+    @Autowired
     private StationService stationService;
     @Autowired
     private ChargerService chargerService;
     @Autowired
-    private StationRepo stationRepo;
+    private ApiService apiService;
+
 
     @GetMapping("/station/all")
     public List<Station> getAllChargingStations()
@@ -61,6 +68,34 @@ public class StationController {
 
     @GetMapping("/station/chargers/{id}")
     public List<Charger> getAllChargerInStation(@PathVariable long id){
+
+
+//        to find all other are connected or not
+        List<Charger> chargers= chargerService.getChargerByStationId(id);
+        List<OcppJsonStatus> activeChargers= apiService.getActiveChargers();
+
+        for (int j=0;j<chargers.size();j++)
+        {
+            Charger charger = chargers.get(j);
+            //update the status id to 2 which means its's  not connected
+            charger.setCharger_status_id(2);
+            chargerService.updateChargerById(charger.getId(),charger);
+        }
+
+        for (int i=0;i<activeChargers.size();i++)
+        {
+            OcppJsonStatus ocppJsonStatus = activeChargers.get(i);
+            for (int j=0;j<chargers.size();j++)
+            {
+                Charger charger = chargers.get(j);
+                if(ocppJsonStatus.getChargeBoxId().equals(charger.getCharger_name())){
+                    //update the status id to 1 which means its's  connected
+                    charger.setCharger_status_id(1);
+                    chargerService.updateChargerById(charger.getId(),charger);
+                }
+            }
+        }
+
         return  chargerService.getChargerByStationId(id);
     }
 }

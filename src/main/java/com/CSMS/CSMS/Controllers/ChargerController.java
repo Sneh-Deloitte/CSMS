@@ -1,11 +1,10 @@
 package com.CSMS.CSMS.Controllers;
 
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
+import com.CSMS.CSMS.ConsumeAPI.dto.OcppJsonStatus;
 import com.CSMS.CSMS.Repository.ChargerRepo;
-import com.CSMS.CSMS.Repository.StationRepo;
 import com.CSMS.CSMS.models.Charger;
-import com.CSMS.CSMS.models.Station;
 import com.CSMS.CSMS.services.ChargerService;
-import com.CSMS.CSMS.services.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,9 @@ public class ChargerController {
     private ChargerService chargerService;
     @Autowired
     private ChargerRepo chargerRepo;
+
+    @Autowired
+    private ApiService apiService;
 
 
     @GetMapping("/charger/{id}")
@@ -41,6 +43,12 @@ public class ChargerController {
     public ResponseEntity<HttpStatus> deleteChargerById(@PathVariable long id){
         chargerService.deleteChargerById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/activeCharger")
+    public void activeCharger()
+    {
+        List<OcppJsonStatus> list = apiService.getActiveChargers();
     }
 
 }

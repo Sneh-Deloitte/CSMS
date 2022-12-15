@@ -26,6 +26,7 @@ public class Booking {
     private String booking_id;
     private int station_id;
     private int charger_id;
+    private int connector_id;
     private String start_time;
     private String end_time;
     private int cost;
@@ -33,12 +34,12 @@ public class Booking {
     private int payment_status;
     private String date;
 
-    public Booking(Long id, int customer_id, String booking_id, int station_id, int charger_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
-        this.id = id;
+    public Booking(int customer_id, String booking_id, int station_id, int charger_id, int connector_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
         this.customer_id = customer_id;
         this.booking_id = booking_id;
         this.station_id = station_id;
         this.charger_id = charger_id;
+        this.connector_id = connector_id;
         this.start_time = start_time;
         this.end_time = end_time;
         this.cost = cost;
@@ -86,6 +87,14 @@ public class Booking {
 
     public void setCharger_id(int charger_id) {
         this.charger_id = charger_id;
+    }
+
+    public int getConnector_id() {
+        return connector_id;
+    }
+
+    public void setConnector_id(int connector_id) {
+        this.connector_id = connector_id;
     }
 
     public String getStart_time() {

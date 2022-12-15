@@ -6,8 +6,6 @@ import com.CSMS.CSMS.models.ActiveReservation;
 import com.CSMS.CSMS.models.Customer;
 import com.CSMS.CSMS.services.ActiveReservationService;
 import com.CSMS.CSMS.services.CustomerService;
-
-import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +46,7 @@ public class CustomerController {
         return customerService.createCustomer(customer);
     }
 
-    @PostMapping("/infinte")
+    @GetMapping("/infinte")
     public void infinity(){
 
         Timer timer = new Timer ();
@@ -61,10 +59,6 @@ public class CustomerController {
         public void run () {
            System.out.println("Running in every 20 seceonds");
 
-           // fetch all the data in active reservation table
-            // if the timestamp match to current
-                //-> hit the steve api
-                //
             List<ActiveReservation> listActiveReservation= activeReservationService.getAllActiveReservation();
             for(int i=0;i<listActiveReservation.size(); i++){
 

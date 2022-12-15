@@ -63,6 +63,28 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+<!--		//for validation of url and other thing-->
+		<dependency>
+			<groupId>org.hibernate.validator</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>6.1.7.Final</version>
+		</dependency>
+
+<!--get all the country code for address dto in consumer api-->
+		<dependency>
+			<groupId>com.neovisionaries</groupId>
+			<artifactId>nv-i18n</artifactId>
+			<version>1.29</version>
+		</dependency>
+
+<!--		for date time format-->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>2.12.2</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

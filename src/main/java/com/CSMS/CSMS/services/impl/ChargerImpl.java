@@ -1,14 +1,19 @@
 package com.CSMS.CSMS.services.impl;
 
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
+import com.CSMS.CSMS.ConsumeAPI.dto.Address;
+import com.CSMS.CSMS.ConsumeAPI.dto.ChargePointForm;
 import com.CSMS.CSMS.Repository.ChargerRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Station;
 import com.CSMS.CSMS.services.ChargerService;
+import com.neovisionaries.i18n.CountryCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -17,6 +22,8 @@ public class ChargerImpl implements ChargerService {
     @Autowired
     private ChargerRepo chargerRepo;
 
+    @Autowired
+    private ApiService apiService;
 
     @Override
     public List<Charger> getChargerByStationId(long id) {
@@ -53,6 +60,29 @@ public class ChargerImpl implements ChargerService {
 
     @Override
     public Charger addCharger(Charger charger) {
+
+        ChargePointForm chargePointForm = new ChargePointForm();
+        BigDecimal lonlat = new BigDecimal(0.0);
+        Address address = new Address();
+        address.setCity("Banglore");
+        address.setStreet("201");
+        address.setHouseNumber("243202");
+        address.setCountry(CountryCode.IN);
+        address.setZipCode("243202");
+
+        chargePointForm.setChargeBoxId(charger.getCharger_name());
+        chargePointForm.setRegistrationStatus("Accepted");
+        chargePointForm.setInsertConnectorStatusAfterTransactionMsg(true);
+        chargePointForm.setAddress(address);
+        chargePointForm.setLocationLatitude(lonlat);
+        chargePointForm.setLocationLongitude(lonlat);
+        chargePointForm.setDescription("Description");
+        chargePointForm.setNote("Registred by CSMS");
+        chargePointForm.setAdminAddress("https://hashedin.com/");
+
+        //adding steve database
+        apiService.addCharger(chargePointForm);
+
         return chargerRepo.save(charger);
     }
 
