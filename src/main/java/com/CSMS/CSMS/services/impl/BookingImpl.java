@@ -1,7 +1,13 @@
 package com.CSMS.CSMS.services.impl;
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
+import com.CSMS.CSMS.ConsumeAPI.dto.ReservationResponse;
 import com.CSMS.CSMS.Repository.BookingRepo;
+import com.CSMS.CSMS.Repository.ChargerRepo;
+import com.CSMS.CSMS.Repository.CustomerRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Booking;
+import com.CSMS.CSMS.models.Charger;
+import com.CSMS.CSMS.models.Customer;
 import com.CSMS.CSMS.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +16,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Date;
+import java.util.HashMap;
 @Service
 public class BookingImpl implements BookingService {
 
     @Autowired
     private BookingRepo bookingRepo;
+    @Autowired
+    private ApiService apiService;
+    @Autowired
+    private ChargerRepo chargerRepo;
+    @Autowired
+    private CustomerRepo customerRepo;
     @Override
     public Booking createBooking(Booking booking) {
 
@@ -38,6 +51,7 @@ public class BookingImpl implements BookingService {
             int year = Integer.parseInt(date[2]);
             if (start_hour<24 && end_hour<24) {
                 if (start_hour < end_hour) {
+                    booking.setBookingStatus("Accepted");
                     return bookingRepo.save(booking);
                 }
             }
@@ -76,6 +90,39 @@ public class BookingImpl implements BookingService {
             return ("No booking found with id: " +id);
         }
 
+    }
+    @Override
+    public String cancelBooking(long id){
+        try{
+            Booking booking = bookingRepo.getById(id);
+            Charger charger= chargerRepo.getById((long)booking.getCharger_id());
+            Customer customer =customerRepo.getById((long) booking.getCustomer_id());
+            String ocppTagOfCustomer=customer.getocpp_tag();
+            List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
+            System.out.println("______________________"+ocppTagOfCustomer);
+            System.out.println("______________________"+getallreservationofocpptag.size());
+            for(int i=0; i<getallreservationofocpptag.size(); i++){
+                ReservationResponse reservationResponse= getallreservationofocpptag.get(i);
+                System.out.println("+++++++++++++++++++++++++++++++++++++"+ booking.getEnd_time());
+                System.out.println("+++++++++++++++++++++++++++++++++++++"+ reservationResponse.getExpiryDatetime());
+                if (reservationResponse.getConnectorId()==booking.getConnector_id() && reservationResponse.getExpiryDatetime().equals(booking.getEnd_time())){
+                    booking.setBookingStatus("Cancelled");
+                    // We got booking which needs to get cancelled and got all the reservations in steve. Booking(customerId).to ocppTag.
+                    HashMap<String,String> store = new HashMap<>();
+                    store.put("chargerName",charger.getCharger_name());
+                    store.put("reservationId",String.valueOf("Chacha"));
+                    String getResult= apiService.cancelReservation(store);
+                    bookingRepo.save(booking);
+                    break;
+                }
+                bookingRepo.save(booking);
+            }
+            
+            return "Done";
+        }
+        catch(Exception e){
+            return "No booking with the provided booking id found";
+        }
     }
 
     @Override

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import com.CSMS.CSMS.Repository.RoleRepo;
 import com.CSMS.CSMS.models.Role;
 import java.util.List;
+
+@CrossOrigin(origins = "*")
 @RestController
 public class RoleController {
     @Autowired

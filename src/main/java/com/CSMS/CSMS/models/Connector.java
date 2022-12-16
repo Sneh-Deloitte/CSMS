@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Connector")
+@Table(name = "Connector", uniqueConstraints = {@UniqueConstraint(name = "UniqueChagerConnectorConnection", columnNames = { "charger_id", "connector_id" })})
+
+// @Table(uniqueConstraints =
+//   { //other constraints
+//   @UniqueConstraint(name = "UniqueNumberAndAddress", columnNames = { "personNumber", "address" })})
 public class Connector {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

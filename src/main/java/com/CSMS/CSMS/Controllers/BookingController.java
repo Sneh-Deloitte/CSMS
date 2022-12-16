@@ -21,6 +21,7 @@ import java.util.*;
 
 import static com.CSMS.CSMS.ConsumeAPI.dto.OcppTransport.JSON;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class BookingController {
 
@@ -49,9 +50,6 @@ public class BookingController {
 
     @PostMapping("/createBooking")
     public Booking createBooking(@RequestBody Booking booking){
-
-
-
                 //store in csms database
                 Booking booking1 = bookingService.createBooking(booking);
 
@@ -64,6 +62,12 @@ public class BookingController {
     @DeleteMapping("/deleteBooking/{id}")
     public String deleteBooking(@PathVariable long id){
         String response = bookingService.deleteBooking(id);
+        return response;
+    }
+
+    @PostMapping("/cancelBooking/{id}")
+    public String cancelBooking(@PathVariable long id){
+        String response = bookingService.cancelBooking(id);
         return response;
     }
     @GetMapping("/getAllBookings")

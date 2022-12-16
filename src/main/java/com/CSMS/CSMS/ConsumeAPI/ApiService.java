@@ -43,17 +43,17 @@ public class ApiService {
         return result.getBody();
     }
 
-    // public String cancelReservation(HashMap<String,String> reserveNowParams){
-    //     String url = API_URL+"/reserveCancel";
+    public String cancelReservation(HashMap<String,String> reserveCancelParams){
+        String url = API_URL+"/reserveCancel";
 
-    //     HttpHeaders headers = new HttpHeaders();
-    //     headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-    //     JSONObject jsonObject = null;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        JSONObject jsonObject = null;
 
-    //     ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, reserveNowParams, String.class);
-    //     System.out.println(result);
-    //     return result.getBody();
-    // }
+        ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, reserveCancelParams, String.class);
+        System.out.println(result);
+        return result.getBody();
+    }
 
     public String addOcppTag(HashMap<String, String> store){
         String url = API_URL+"/ocppTags";
@@ -83,7 +83,15 @@ public class ApiService {
         return List.of(response.getBody());
     }
 
+    public List<Integer> getAllConnectors(String chargeBoxIdentity){
+        String url = API_URL+"/getAllConnectors?chargeBoxIdentity={chargeBoxIdentity}";
+        ResponseEntity<Integer[]> response = restTemplateBuilder.build().getForEntity(url,  Integer[].class, chargeBoxIdentity);
+        return List.of(response.getBody());
+    }
 
-
-
+    public List<ReservationResponse> getAllReservationOfOcppTag(String ocppTag){
+        String url = API_URL+"/reservations?ocppTag={ocppTag}";
+        ResponseEntity<ReservationResponse[]> response = restTemplateBuilder.build().getForEntity(url,  ReservationResponse[].class, ocppTag);
+        return List.of(response.getBody());
+    }
 }

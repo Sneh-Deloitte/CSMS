@@ -23,18 +23,20 @@ public class Booking {
     //Include User Id
 
     private int customer_id;
-    private String booking_id;
-    private int station_id;
-    private int charger_id;
-    private int connector_id;
     private String start_time;
     private String end_time;
     private int cost;
     private String payment_mode;
     private int payment_status;
     private String date;
+    private int station_id;
+    private int charger_id;
+    private String booking_id;
+    private int connector_id;
+    private String bookingStatus;
+    // private String chargerName;
 
-    public Booking(int customer_id, String booking_id, int station_id, int charger_id, int connector_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
+    public Booking(String bookingStatus,int customer_id, String booking_id, int station_id, int charger_id, int connector_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
         this.customer_id = customer_id;
         this.booking_id = booking_id;
         this.station_id = station_id;
@@ -46,6 +48,8 @@ public class Booking {
         this.payment_mode = payment_mode;
         this.payment_status = payment_status;
         this.date = date;
+        this.bookingStatus=bookingStatus;
+        // this.chargerName=chargerName;
     }
 
     public Long getId() {
@@ -144,5 +148,19 @@ public class Booking {
     public void setDate(String date) {
         this.date = date;
     }
+    public String getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(String bookingStatus) {
+        this.bookingStatus = bookingStatus;
+    }
+    // public String getchargerName() {
+    //     return chargerName;
+    // }
+
+    // public void setchargerName(String chargerName) {
+    //     this.chargerName = chargerName;
+    // }
 }
 

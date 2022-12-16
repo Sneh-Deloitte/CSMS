@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class CustomerController {
     @Autowired
@@ -45,26 +46,4 @@ public class CustomerController {
     public Customer createCustomer(@RequestBody Customer customer){
         return customerService.createCustomer(customer);
     }
-
-    @GetMapping("/infinte")
-    public void infinity(){
-
-        Timer timer = new Timer ();
-        timer.schedule (hourlyTask, 0l, 20000);
-    }
-
-
-    TimerTask hourlyTask = new TimerTask () {
-        @Override
-        public void run () {
-           System.out.println("Running in every 20 seceonds");
-
-            List<ActiveReservation> listActiveReservation= activeReservationService.getAllActiveReservation();
-            for(int i=0;i<listActiveReservation.size(); i++){
-
-                System.out.println(activeReservationService.getActiveStatus(listActiveReservation.get(i)));
-            }
-
-        }
-    };
 }

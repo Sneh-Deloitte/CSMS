@@ -21,8 +21,6 @@ package com.CSMS.CSMS.ConsumeAPI.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
-import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 /**
  * @author Sevket Goekay <sevketgokay@gmail.com>

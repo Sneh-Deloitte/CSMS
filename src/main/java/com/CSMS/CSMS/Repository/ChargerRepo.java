@@ -10,8 +10,10 @@ import java.util.List;
 @Repository
 public interface ChargerRepo extends JpaRepository<Charger, Long> {
 
-
     @Query(value = "SELECT * FROM charger WHERE station_id=?1",nativeQuery = true)
     List<Charger> getChargerByStationId(long id);
+
+    @Query(value= "SELECT * FROM charger WHERE charger_name=?1", nativeQuery = true)
+    List<Charger> getChargerByName(String charger_name);
 
 }
