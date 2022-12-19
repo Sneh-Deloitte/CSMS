@@ -11,6 +11,8 @@ import com.CSMS.CSMS.models.Booking;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Customer;
 import com.CSMS.CSMS.services.ActiveReservationService;
+import com.CSMS.CSMS.services.BookingService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,9 @@ public class ActiveReservationImpl implements ActiveReservationService {
 
     @Autowired
     private  ApiService apiService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @Autowired
     private ActiveReservationRepo activeReservationRepo;
@@ -82,20 +87,17 @@ public class ActiveReservationImpl implements ActiveReservationService {
             callSteveReservation(booking);
             Long id=activeReservation.getId();
             deleteActiveReservation(id);
-            System.out.println(getAllActiveReservation());
+            // System.out.println(getAllActiveReservation());
             return  true;
         }
         return false;
     }
-
-
 
     private String getCurrentTime(){
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
-
 
     private void callSteveReservation(Booking booking){
                 // We will call central station api for reservation
@@ -112,8 +114,13 @@ public class ActiveReservationImpl implements ActiveReservationService {
         store.put("expiryTime",expiryTime);
         store.put("connectorId",String.valueOf(booking.getConnector_id()));
 
-//        calling steve api
+        // Calling steve api
         String getResult= apiService.addReservation(store);
+
+        // Cancel Reservation
+        if (booking.getBookingStatus().equals("Cancelled")){
+            bookingService.cancelReservation(booking.getId());
+        }
     }
 
 }

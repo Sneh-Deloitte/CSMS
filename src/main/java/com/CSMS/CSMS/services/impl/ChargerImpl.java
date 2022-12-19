@@ -6,11 +6,9 @@ import com.CSMS.CSMS.ConsumeAPI.dto.ChargePointForm;
 import com.CSMS.CSMS.Repository.ChargerRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Charger;
-import com.CSMS.CSMS.models.Station;
 import com.CSMS.CSMS.services.ChargerService;
 import com.neovisionaries.i18n.CountryCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -79,8 +77,6 @@ public class ChargerImpl implements ChargerService {
         chargePointForm.setDescription("Description");
         chargePointForm.setNote("Registred by CSMS");
         chargePointForm.setAdminAddress("https://hashedin.com/");
-
-        //adding steve database
         apiService.addCharger(chargePointForm);
 
         return chargerRepo.save(charger);

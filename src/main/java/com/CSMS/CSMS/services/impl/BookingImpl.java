@@ -9,13 +9,16 @@ import com.CSMS.CSMS.models.Booking;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Customer;
 import com.CSMS.CSMS.services.BookingService;
+
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Date;
 import java.util.HashMap;
 @Service
 public class BookingImpl implements BookingService {
@@ -95,35 +98,58 @@ public class BookingImpl implements BookingService {
     public String cancelBooking(long id){
         try{
             Booking booking = bookingRepo.getById(id);
-            Charger charger= chargerRepo.getById((long)booking.getCharger_id());
-            Customer customer =customerRepo.getById((long) booking.getCustomer_id());
-            String ocppTagOfCustomer=customer.getocpp_tag();
-            List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
-            System.out.println("______________________"+ocppTagOfCustomer);
-            System.out.println("______________________"+getallreservationofocpptag.size());
-            String EndTime= booking.getDate()+"T"+booking.getEnd_time()+":00.000Z";
-            for(int i=0; i<getallreservationofocpptag.size(); i++){
-                ReservationResponse reservationResponse= getallreservationofocpptag.get(i);
-                System.out.println("+++++++++++++++++++++++++++++++++++++"+ EndTime);
-                System.out.println("+++++++++++++++++++++++++++++++++++++"+ reservationResponse.getExpiryDatetime());
-                if (reservationResponse.getConnectorId()==booking.getConnector_id() && reservationResponse.getExpiryDatetime().equals(EndTime)){
-                    booking.setBookingStatus("Cancelled");
-                    // We got booking which needs to get cancelled and got all the reservations in steve. Booking(customerId).to ocppTag.
-                    HashMap<String,String> store = new HashMap<>();
-                    store.put("chargerName",charger.getCharger_name());
-                    store.put("reservationId",String.valueOf(reservationResponse.getReservationId()));
-                    String getResult= apiService.cancelReservation(store);
-                    bookingRepo.save(booking);
-                    break;
-                }
-                bookingRepo.save(booking);
+            // Charger charger= chargerRepo.getById((long)booking.getCharger_id());
+            // Customer customer =customerRepo.getById((long) booking.getCustomer_id());
+            // String ocppTagOfCustomer=customer.getocpp_tag();
+            booking.setBookingStatus("Cancelled");
+            bookingRepo.save(booking);
+            // Boolean flag=false;
+            String startTime = booking.getStart_time();
+            String date = booking.getDate();
+            String currentTime = getCurrentTime();
+            String finalDateAccessed=date+" "+startTime+":00";
+            System.out.println(getCurrentTime());
+            System.out.println(date+" "+startTime+ "----------"+ currentTime+"--------"+booking.getBooking_id());
+            DateTimeFormatter f = DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" );
+            DateTimeFormatter g = DateTimeFormatter.ofPattern( "uuuu/MM/dd HH:mm:ss" );
+            LocalDateTime currentDate = LocalDateTime.parse( currentTime , g ) ;
+            LocalDateTime storedDate = LocalDateTime.parse( finalDateAccessed , f ) ;
+
+        if(currentDate.compareTo(storedDate)>=0){
+                cancelReservation(id);
             }
-            
             return "Done";
         }
         catch(Exception e){
             return "No booking with the provided booking id found";
         }
+    }
+
+    private String getCurrentTime(){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return dtf.format(now);
+    }
+    
+    public String cancelReservation(Long id){
+        Booking booking = bookingRepo.getById(id);
+        Charger charger= chargerRepo.getById((long)booking.getCharger_id());
+        Customer customer =customerRepo.getById((long) booking.getCustomer_id());
+        String ocppTagOfCustomer=customer.getocpp_tag();
+        List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
+            String EndTime= booking.getDate()+"T"+booking.getEnd_time()+":00.000Z";
+            for(int i=0; i<getallreservationofocpptag.size(); i++){
+                ReservationResponse reservationResponse= getallreservationofocpptag.get(i);
+                if (reservationResponse.getConnectorId()==booking.getConnector_id() && reservationResponse.getExpiryDatetime().equals(EndTime)){
+                    // We got booking which needs to get cancelled and got all the reservations in steve. Booking(customerId).to ocppTag.
+                    HashMap<String,String> store = new HashMap<>();
+                    store.put("chargerName",charger.getCharger_name());
+                    store.put("reservationId",String.valueOf(reservationResponse.getReservationId()));
+                    String getResult= apiService.cancelReservation(store);
+                    break;
+                }
+            }
+            return "Done";
     }
 
     @Override
@@ -169,11 +195,13 @@ public class BookingImpl implements BookingService {
     public List<Booking> getBookingDetailByChargerIdDate(int chargerId, String date) {
         return bookingRepo.getBookingByChargerIdDate(chargerId, date);
     }
-
-
     @Override
     public List<Booking> getBookingByStationId(int stationID){
         return bookingRepo.findBookingByStationId(stationID);
+    }
+    @Override
+    public List<Booking> getBookingByCustomerId(int customerId){
+        return bookingRepo.findBookingByCustomerId(customerId);
     }
 
 

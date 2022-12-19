@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 
-
 @Service
 public class ApiService {
 
@@ -29,7 +28,6 @@ public class ApiService {
         ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, chargePointForm, String.class);
         System.out.println(result);
     }
-
 
     public String addReservation(HashMap<String,String> reserveNowParams){
         String url = API_URL+"/reserveNow";
@@ -90,7 +88,7 @@ public class ApiService {
     }
 
     public List<ReservationResponse> getAllReservationOfOcppTag(String ocppTag){
-        String url = API_URL+"/reservations?ocppTag={ocppTag}";
+        String url = API_URL+"/getAllUserReservations?ocppTag={ocppTag}";
         ResponseEntity<ReservationResponse[]> response = restTemplateBuilder.build().getForEntity(url,  ReservationResponse[].class, ocppTag);
         return List.of(response.getBody());
     }

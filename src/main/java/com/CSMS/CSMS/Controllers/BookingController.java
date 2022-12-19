@@ -91,6 +91,10 @@ public class BookingController {
     public List<Booking> chargerIdBooking(@RequestParam int chargerId){
         return bookingService.getBookingByChargerId(chargerId);
     }
+    @GetMapping("/getBookingByCustomerId")
+    public List<Booking> customerIdBooking(@RequestParam int customer_id){
+        return bookingService.getBookingByCustomerId(customer_id);
+    }
 
     @PutMapping("/updateBooking/{id}")
     public Booking updateBooking(@PathVariable long id,@RequestBody Booking booking)

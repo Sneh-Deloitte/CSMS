@@ -4,17 +4,12 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
-/**
- * @author Sevket Goekay <sevketgokay@gmail.com>
- * @since 21.01.2016
- */
 public class IdTagListValidator implements ConstraintValidator<IdTag, List<String>> {
 
     private static final IdTagValidator VALIDATOR = new IdTagValidator();
 
     @Override
     public void initialize(IdTag constraintAnnotation) {
-        // No-op
     }
 
     @Override

@@ -16,8 +16,10 @@ public interface BookingService {
     public List<Booking> getBookingByDate(String date);
     public List<Booking> getBookingByStationId(int stationId);
     public List<Booking> getBookingByChargerId(int chargerId);
+    public List<Booking> getBookingByCustomerId(int customerId);
 
     public ArrayList<List> getBookingByChargerIdDate(int chargerId, String date);
+    public String cancelReservation(Long id);
 
     // GetBookingDetailByChargerId and Date Returns Booking Detail
 
