@@ -102,12 +102,12 @@ public class BookingController {
         return bookingService.updateBooking(id, booking);
     }
     @GetMapping("/getBookingByChargerIdDate")
-    public ArrayList<List> bookingList(@RequestParam int chargerId, @RequestParam String date){
-        return bookingService.getBookingByChargerIdDate(chargerId, date);
+    public ArrayList<List> bookingList(@RequestParam int chargerId,@RequestParam int connector_id, @RequestParam String date){
+        return bookingService.getBookingByChargerIdDate(chargerId,connector_id, date);
     }
     @GetMapping("/getBookingDetailByChargerIdDate")
-    public List<Booking> bookingListt(@RequestParam int chargerId, @RequestParam String date){
-        return bookingService.getBookingDetailByChargerIdDate(chargerId, date);
+    public List<Booking> bookingListt(@RequestParam int chargerId,@RequestParam int connector_id, @RequestParam String date){
+        return bookingService.getBookingDetailByChargerIdDate(chargerId, connector_id,date);
     }
 
 }

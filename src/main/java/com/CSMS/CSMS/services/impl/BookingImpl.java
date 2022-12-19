@@ -176,8 +176,8 @@ public class BookingImpl implements BookingService {
     }
 
     @Override
-    public ArrayList<List> getBookingByChargerIdDate(int chargerId, String date) {
-        List<Booking> list = bookingRepo.getBookingByChargerIdDate(chargerId,date);
+    public ArrayList<List> getBookingByChargerIdDate(int chargerId, int connector_id, String date) {
+        List<Booking> list = bookingRepo.getBookingByChargerIdDate(chargerId,connector_id,date);
         ArrayList<List> L = new ArrayList<>();
         for(int i = 0; i < list.size(); i ++){
             Booking b = list.get(i);
@@ -192,8 +192,8 @@ public class BookingImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> getBookingDetailByChargerIdDate(int chargerId, String date) {
-        return bookingRepo.getBookingByChargerIdDate(chargerId, date);
+    public List<Booking> getBookingDetailByChargerIdDate(int chargerId, int connector_id, String date) {
+        return bookingRepo.getBookingByChargerIdDate(chargerId,connector_id, date);
     }
     @Override
     public List<Booking> getBookingByStationId(int stationID){
