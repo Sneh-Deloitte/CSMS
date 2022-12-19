@@ -177,23 +177,34 @@ public class BookingImpl implements BookingService {
 
     @Override
     public ArrayList<List> getBookingByChargerIdDate(int chargerId, int connector_id, String date) {
-        List<Booking> list = bookingRepo.getBookingByChargerIdDate(chargerId,connector_id,date);
+       List<Booking> list = bookingRepo.getBookingByChargerIdDate(chargerId,date);
         ArrayList<List> L = new ArrayList<>();
         for(int i = 0; i < list.size(); i ++){
             Booking b = list.get(i);
-            String startTime = b.getStart_time();
-            String endTime = b.getEnd_time();
-            List<String> list1 = new ArrayList<>();
-            list1.add(startTime);
-            list1.add(endTime);
-            L.add(list1);
+            if(connector_id==b.getConnector_id())
+            {
+                String startTime = b.getStart_time();
+                String endTime = b.getEnd_time();
+                List<String> list1 = new ArrayList<>();
+                list1.add(startTime);
+                list1.add(endTime);
+                L.add(list1);
+            }
         }
         return L;
     }
-
     @Override
     public List<Booking> getBookingDetailByChargerIdDate(int chargerId, int connector_id, String date) {
-        return bookingRepo.getBookingByChargerIdDate(chargerId,connector_id, date);
+        List<Booking> list = bookingRepo.getBookingByChargerIdDate(chargerId,date);
+        List<Booking> L = new ArrayList<>();
+        for(int i = 0; i < list.size(); i ++){
+            Booking b = list.get(i);
+            if(connector_id==b.getConnector_id())
+            {
+                L.add(b);
+            }
+        }
+        return L;
     }
     @Override
     public List<Booking> getBookingByStationId(int stationID){
