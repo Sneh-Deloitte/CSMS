@@ -106,8 +106,8 @@ public class BookingController {
         return bookingService.getBookingByChargerIdDate(chargerId,connector_id, date);
     }
     @GetMapping("/getBookingDetailByChargerIdDate")
-    public List<Booking> bookingListt(@RequestParam int chargerId,@RequestParam int connector_id, @RequestParam String date){
-        return bookingService.getBookingDetailByChargerIdDate(chargerId, connector_id,date);
+    public List<Booking> bookingListt(@RequestParam int chargerId,@RequestParam int connectorId, @RequestParam String date){
+        return bookingService.getBookingDetailByChargerIdDate(chargerId, connectorId,date);
     }
 
 }
