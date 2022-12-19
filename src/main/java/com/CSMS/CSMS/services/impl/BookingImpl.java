@@ -101,16 +101,17 @@ public class BookingImpl implements BookingService {
             List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
             System.out.println("______________________"+ocppTagOfCustomer);
             System.out.println("______________________"+getallreservationofocpptag.size());
+            String EndTime= booking.getDate()+"T"+booking.getEnd_time()+":00.000Z";
             for(int i=0; i<getallreservationofocpptag.size(); i++){
                 ReservationResponse reservationResponse= getallreservationofocpptag.get(i);
-                System.out.println("+++++++++++++++++++++++++++++++++++++"+ booking.getEnd_time());
+                System.out.println("+++++++++++++++++++++++++++++++++++++"+ EndTime);
                 System.out.println("+++++++++++++++++++++++++++++++++++++"+ reservationResponse.getExpiryDatetime());
-                if (reservationResponse.getConnectorId()==booking.getConnector_id() && reservationResponse.getExpiryDatetime().equals(booking.getEnd_time())){
+                if (reservationResponse.getConnectorId()==booking.getConnector_id() && reservationResponse.getExpiryDatetime().equals(EndTime)){
                     booking.setBookingStatus("Cancelled");
                     // We got booking which needs to get cancelled and got all the reservations in steve. Booking(customerId).to ocppTag.
                     HashMap<String,String> store = new HashMap<>();
                     store.put("chargerName",charger.getCharger_name());
-                    store.put("reservationId",String.valueOf("Chacha"));
+                    store.put("reservationId",String.valueOf(reservationResponse.getReservationId()));
                     String getResult= apiService.cancelReservation(store);
                     bookingRepo.save(booking);
                     break;
@@ -137,8 +138,8 @@ public class BookingImpl implements BookingService {
 
     @Override
     public List<Booking> getBookingByDate(String date){
-        String[] dateNew= date.split("/",3);
-        if (dateNew[0].length()!=2 || dateNew[1].length()!=2 || dateNew[2].length()!=4 || date.length()!=10){
+        String[] dateNew= date.split("-",3);
+        if (dateNew[0].length()!=4 || dateNew[1].length()!=2 || dateNew[2].length()!=2 || date.length()!=10){
             throw new NotFoundException("Start time and end time value isn't as expected");
         }
         return bookingRepo.findBookingByDate(date);
