@@ -23,9 +23,9 @@ public class CustomerImpl implements CustomerService {
     public Customer createCustomer(Customer customer) {
         // String expiryTime=booking.getDate()+"T"+booking.getEnd_time()+":00";
         HashMap<String,String> store = new HashMap<>();
-        store.put("idTag", customer.getocpp_tag());
+        store.put("idTag", customer.getOcpp_tag());
         store.put("parentIdTag",customer.getParentIdTag());
-        store.put("expiryDate",customer.getdate());
+        store.put("expiryDate",customer.getDate());
         store.put("note", "Added");
         store.put("maxActiveTransactionCount","99");
         String getResult= apiService.addOcppTag(store);
