@@ -1,36 +1,38 @@
 package com.CSMS.CSMS.models;
 
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// import java.time.String;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(name = "UniqueEmail", columnNames = { "customer_email"})})
+
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-  //  @Column(name = "customer_id", nullable = false)
     private Long id;
-
-    private String role_id;
+    private Integer role_id;
     private String customer_email;
     private String customer_firstName;
     private String customer_lastName;
-    private int dob_customer;
+    private Date dob_customer;
     private String customer_gender;
     private String customer_nationality;
-    private int customer_phone;
-    private String ocpp_tag;
-    private String parentIdTag;
-    private String date;
+    private String customer_phone;
+    private String ocpp_tag; // Random generated
+    private String parentIdTag; // same as ocpp
+    private Date exp_date_ocpp; //exp of ocpp tag
+    private String password;
 
-    public Customer(String date, String parentIdTag, Long id, String role_id, String customer_email, String customer_firstName, String customer_lastName, int dob_customer, String customer_gender, String customer_nationality, int customer_phone, String ocpp_tag) {
-        this.id = id;
+    public Customer(Integer role_id, String customer_email, String customer_firstName, String customer_lastName, Date dob_customer, String customer_gender, String customer_nationality, String customer_phone, String ocpp_tag, String parentIdTag, Date exp_date_ocpp, String password) {
         this.role_id = role_id;
         this.customer_email = customer_email;
         this.customer_firstName = customer_firstName;
@@ -41,6 +43,8 @@ public class Customer {
         this.customer_phone = customer_phone;
         this.ocpp_tag = ocpp_tag;
         this.parentIdTag = parentIdTag;
-        this.date= date;
+        this.exp_date_ocpp = exp_date_ocpp;
+        this.password = password;
     }
 }
+

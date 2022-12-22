@@ -25,7 +25,7 @@ public class CustomerImpl implements CustomerService {
         HashMap<String,String> store = new HashMap<>();
         store.put("idTag", customer.getOcpp_tag());
         store.put("parentIdTag",customer.getParentIdTag());
-        store.put("expiryDate",customer.getDate());
+        store.put("expiryDate",String.valueOf(customer.getExp_date_ocpp()));
         store.put("note", "Added");
         store.put("maxActiveTransactionCount","99");
         String getResult= apiService.addOcppTag(store);
@@ -38,8 +38,8 @@ public class CustomerImpl implements CustomerService {
         Customer customer1 = customerRepo.findById(id).orElseThrow(()-> new NotFoundException("Customer not found with id" +id));
         if(customer1.getCustomer_email() != null)customer1.setCustomer_email(customer.getCustomer_email());
         if(customer1.getCustomer_gender() != null)customer1.setCustomer_gender(customer.getCustomer_gender());
-        if(customer1.getCustomer_phone() != 0)customer1.setCustomer_phone(customer.getCustomer_phone());
-        if(customer1.getDob_customer() != 0)customer1.setDob_customer(customer.getDob_customer());
+        if(customer1.getCustomer_phone() != null)customer1.setCustomer_phone(customer.getCustomer_phone());
+        if(customer1.getDob_customer() != null)customer1.setDob_customer(customer.getDob_customer());
         if(customer1.getCustomer_nationality() != null)customer1.setCustomer_nationality(customer.getCustomer_nationality());
         if(customer1.getCustomer_firstName() != null)customer1.setCustomer_firstName(customer.getCustomer_firstName());
         if(customer1.getCustomer_lastName() != null)customer1.setCustomer_lastName(customer.getCustomer_lastName());
