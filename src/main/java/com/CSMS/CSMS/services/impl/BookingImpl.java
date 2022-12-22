@@ -98,23 +98,17 @@ public class BookingImpl implements BookingService {
     public String cancelBooking(long id){
         try{
             Booking booking = bookingRepo.getById(id);
-            // Charger charger= chargerRepo.getById((long)booking.getCharger_id());
-            // Customer customer =customerRepo.getById((long) booking.getCustomer_id());
-            // String ocppTagOfCustomer=customer.getocpp_tag();
             booking.setBookingStatus("Cancelled");
             bookingRepo.save(booking);
-            // Boolean flag=false;
             String startTime = booking.getStart_time();
             String date = booking.getDate();
             String currentTime = getCurrentTime();
             String finalDateAccessed=date+" "+startTime+":00";
             System.out.println(getCurrentTime());
-            System.out.println(date+" "+startTime+ "----------"+ currentTime+"--------"+booking.getBooking_id());
             DateTimeFormatter f = DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" );
             DateTimeFormatter g = DateTimeFormatter.ofPattern( "uuuu/MM/dd HH:mm:ss" );
             LocalDateTime currentDate = LocalDateTime.parse( currentTime , g ) ;
             LocalDateTime storedDate = LocalDateTime.parse( finalDateAccessed , f ) ;
-
         if(currentDate.compareTo(storedDate)>=0){
                 cancelReservation(id);
             }
@@ -135,7 +129,7 @@ public class BookingImpl implements BookingService {
         Booking booking = bookingRepo.getById(id);
         Charger charger= chargerRepo.getById((long)booking.getCharger_id());
         Customer customer =customerRepo.getById((long) booking.getCustomer_id());
-        String ocppTagOfCustomer=customer.getocpp_tag();
+        String ocppTagOfCustomer=customer.getOcpp_tag();
         List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
             String EndTime= booking.getDate()+"T"+booking.getEnd_time()+":00.000Z";
             for(int i=0; i<getallreservationofocpptag.size(); i++){
@@ -214,8 +208,4 @@ public class BookingImpl implements BookingService {
     public List<Booking> getBookingByCustomerId(int customerId){
         return bookingRepo.findBookingByCustomerId(customerId);
     }
-
-
-
-
 }

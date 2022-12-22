@@ -1,6 +1,4 @@
-
 package com.CSMS.CSMS.ConsumeAPI.dto;
-
 
 import com.CSMS.CSMS.ConsumeAPI.validation.ChargeBoxId;
 import lombok.Getter;

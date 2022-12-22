@@ -23,21 +23,4 @@ public class ActiveReservation {
     public ActiveReservation(Long reservation_id) {
         this.reservation_id = reservation_id;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getReservation_id() {
-        return reservation_id;
-    }
-
-    public void setReservation_id(Long reservation_id) {
-        this.reservation_id = reservation_id;
-    }
-
 }

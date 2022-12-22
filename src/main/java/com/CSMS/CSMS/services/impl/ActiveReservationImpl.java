@@ -110,7 +110,7 @@ public class ActiveReservationImpl implements ActiveReservationService {
         Customer customer =customerRepo.getById((long) booking.getCustomer_id());
         HashMap<String,String> store = new HashMap<>();
         store.put("chargerName",charger.getCharger_name());
-        store.put("customerTag",customer.getocpp_tag());
+        store.put("customerTag",customer.getOcpp_tag());
         store.put("expiryTime",expiryTime);
         store.put("connectorId",String.valueOf(booking.getConnector_id()));
 
