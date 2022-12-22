@@ -1,11 +1,8 @@
 package com.CSMS.CSMS.models;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-// import java.time.String;
 
 import javax.persistence.*;
 
@@ -13,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@Table(name = "Customer", uniqueConstraints = {@UniqueConstraint(name = "UniqueEmail", columnNames = { "customer_email"})})
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -4,9 +4,11 @@ import com.CSMS.CSMS.ConsumeAPI.ApiService;
 import com.CSMS.CSMS.ConsumeAPI.dto.Address;
 import com.CSMS.CSMS.ConsumeAPI.dto.ChargePointForm;
 import com.CSMS.CSMS.Repository.ChargerRepo;
+import com.CSMS.CSMS.Repository.StationRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.services.ChargerService;
+import com.CSMS.CSMS.services.StationService;
 import com.neovisionaries.i18n.CountryCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,9 @@ public class ChargerImpl implements ChargerService {
 
     @Autowired
     private ChargerRepo chargerRepo;
+
+    @Autowired
+    private StationService stationservice;
 
     @Autowired
     private ApiService apiService;
@@ -58,15 +63,16 @@ public class ChargerImpl implements ChargerService {
 
     @Override
     public Charger addCharger(Charger charger) {
-
+        stationservice.getChargingStationById(charger.getStation_id());
         ChargePointForm chargePointForm = new ChargePointForm();
         BigDecimal lonlat = new BigDecimal(0.0);
         Address address = new Address();
-        address.setCity("Banglore");
-        address.setStreet("201");
-        address.setHouseNumber("243202");
-        address.setCountry(CountryCode.IN);
-        address.setZipCode("243202");
+        address.setCity(stationservice.getChargingStationById(charger.getStation_id()).getCity());
+        address.setStreet(stationservice.getChargingStationById(charger.getStation_id()).getStreet());
+        address.setHouseNumber(stationservice.getChargingStationById(charger.getStation_id()).getHouseNumber());
+        String countryCode=stationservice.getChargingStationById(charger.getStation_id()).getCountry().toUpperCase().substring(0,2);
+        address.setCountry(CountryCode.getByAlpha2Code(countryCode));
+        address.setZipCode(stationservice.getChargingStationById(charger.getStation_id()).getZipCode());
 
         chargePointForm.setChargeBoxId(charger.getCharger_name());
         chargePointForm.setRegistrationStatus("Accepted");
@@ -81,6 +87,4 @@ public class ChargerImpl implements ChargerService {
 
         return chargerRepo.save(charger);
     }
-
-
 }

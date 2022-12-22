@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "station")
+@Table(name = "station", uniqueConstraints = {@UniqueConstraint(name = "UniqueLatitudeAndLongitude", columnNames = {"latitude", "longitude"})})
 public class Station {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,8 +28,12 @@ public class Station {
     private String email_id;
     private int contact_no;
     private String image_url;
+    private String street;
+    private String houseNumber;
+    private String country;
+    private String zipCode;
 
-    public Station(String address, double latitude, double longitude, String city, String name, String email_id, int contact_no, String image_url) {
+    public Station(String zipCode, String country, String houseNumber, String street,String address, double latitude, double longitude, String city, String name, String email_id, int contact_no, String image_url) {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -38,6 +42,10 @@ public class Station {
         this.email_id = email_id;
         this.contact_no = contact_no;
         this.image_url = image_url;
+        this.street = street;
+        this.houseNumber= houseNumber;
+        this.country=country;
+        this.zipCode=zipCode;
     }
 
     public String getName() {
