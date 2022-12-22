@@ -22,6 +22,7 @@ public class AuthController {
         return this.authService.loginUser(headers.get("authorization").substring(7),request.email, request.password);
     }
 
+
     @PostMapping("/signup")
     public AuthResponse signupUser(@RequestBody SignupRequest request) throws MessagingException, IOException {
         return this.authService.signupUser(request);
