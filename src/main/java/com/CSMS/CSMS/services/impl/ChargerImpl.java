@@ -3,10 +3,13 @@ package com.CSMS.CSMS.services.impl;
 import com.CSMS.CSMS.ConsumeAPI.ApiService;
 import com.CSMS.CSMS.ConsumeAPI.dto.Address;
 import com.CSMS.CSMS.ConsumeAPI.dto.ChargePointForm;
+import com.CSMS.CSMS.Repository.BookingRepo;
 import com.CSMS.CSMS.Repository.ChargerRepo;
 import com.CSMS.CSMS.Repository.StationRepo;
 import com.CSMS.CSMS.exception.NotFoundException;
+import com.CSMS.CSMS.models.Booking;
 import com.CSMS.CSMS.models.Charger;
+import com.CSMS.CSMS.services.BookingService;
 import com.CSMS.CSMS.services.ChargerService;
 import com.CSMS.CSMS.services.StationService;
 import com.neovisionaries.i18n.CountryCode;
@@ -23,10 +26,16 @@ public class ChargerImpl implements ChargerService {
     private ChargerRepo chargerRepo;
 
     @Autowired
+    private BookingRepo bookingRepo;
+
+    @Autowired
     private StationService stationservice;
 
     @Autowired
     private ApiService apiService;
+
+    @Autowired
+    private BookingService bookingService;
 
     @Override
     public List<Charger> getChargerByStationId(long id) {
@@ -63,10 +72,8 @@ public class ChargerImpl implements ChargerService {
 
     @Override
     public Charger addCharger(Charger charger) {
-        // System.out.println(charger.getCharger_name());
         Integer count=chargerRepo.countChargerByStationId(charger.getStation_id());
-        // System.out.println(chargerRepo.countChargerByStationId(charger.getStation_id()));
-        charger.setCharger_name(String.valueOf(charger.getStation_id())+String.valueOf(count+1)+charger.getCharger_name());
+        charger.setCharger_name(String.valueOf(charger.getStation_id())+","+String.valueOf(count+1)+","+charger.getCharger_name());
         stationservice.getChargingStationById(charger.getStation_id());
         ChargePointForm chargePointForm = new ChargePointForm();
         BigDecimal lonlat = new BigDecimal(0.0);
@@ -90,5 +97,17 @@ public class ChargerImpl implements ChargerService {
         apiService.addCharger(chargePointForm);
 
         return chargerRepo.save(charger);
+    }
+
+    @Override
+    public String outOfService(String chargerName){
+        String[] chargerDetails=chargerName.split(",",3);
+        Integer chargerId= Integer.parseInt(chargerDetails[1]);
+        List<Booking> list=bookingRepo.findBookingByChargerId(chargerId);
+        for(Booking b:list){
+            // System.out.println(b.getBooking_id());
+            bookingService.cancelBooking(b.getId());
+        }
+        return chargerName;
     }
 }

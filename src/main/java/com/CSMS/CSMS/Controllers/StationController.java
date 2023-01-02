@@ -98,4 +98,11 @@ public class StationController {
 
         return  chargerService.getChargerByStationId(id);
     }
+
+    @PostMapping("/stationByMail/{mail}")
+    public List<Station> getStationByMail(@PathVariable String mail){
+        System.out.println(mail);
+        return  stationService.getStationByMail(mail);
+    }
+
 }

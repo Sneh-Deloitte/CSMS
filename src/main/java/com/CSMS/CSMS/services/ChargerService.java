@@ -17,5 +17,7 @@ public interface ChargerService {
 
     public Charger addCharger(Charger charger);
 
+    public String outOfService(String chargerName);
+
 }
 

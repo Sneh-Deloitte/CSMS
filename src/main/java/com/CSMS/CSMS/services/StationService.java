@@ -18,4 +18,6 @@ public interface StationService {
     public void deleteChargingStation(long id);
 
     public Station addChargingStation(Station station);
+
+    public List<Station> getStationByMail(String mail);
 }

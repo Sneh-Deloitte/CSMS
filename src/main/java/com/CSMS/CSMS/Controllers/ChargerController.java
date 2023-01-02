@@ -52,4 +52,10 @@ public class ChargerController {
         List<OcppJsonStatus> list = apiService.getActiveChargers();
     }
 
+    @PostMapping("/charger/outOfService")
+    public String outOfService(@RequestBody String chargerName){
+        String list=chargerService.outOfService(chargerName);
+        return list;
+    }
+
 }
