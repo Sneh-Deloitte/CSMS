@@ -63,6 +63,10 @@ public class ChargerImpl implements ChargerService {
 
     @Override
     public Charger addCharger(Charger charger) {
+        // System.out.println(charger.getCharger_name());
+        Integer count=chargerRepo.countChargerByStationId(charger.getStation_id());
+        // System.out.println(chargerRepo.countChargerByStationId(charger.getStation_id()));
+        charger.setCharger_name(String.valueOf(charger.getStation_id())+String.valueOf(count+1)+charger.getCharger_name());
         stationservice.getChargingStationById(charger.getStation_id());
         ChargePointForm chargePointForm = new ChargePointForm();
         BigDecimal lonlat = new BigDecimal(0.0);
