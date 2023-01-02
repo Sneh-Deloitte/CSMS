@@ -87,7 +87,6 @@ public class ActiveReservationImpl implements ActiveReservationService {
             callSteveReservation(booking);
             Long id=activeReservation.getId();
             deleteActiveReservation(id);
-            // System.out.println(getAllActiveReservation());
             return  true;
         }
         return false;

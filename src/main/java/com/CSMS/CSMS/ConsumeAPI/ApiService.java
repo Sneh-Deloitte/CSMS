@@ -54,12 +54,11 @@ public class ApiService {
     }
 
     public String addOcppTag(HashMap<String, String> store){
-        String url = API_URL+"/ocppTags";
+        String url = API_URL+"ocppTags";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         JSONObject jsonObject = null;
-
         ResponseEntity<String> result = restTemplateBuilder.build().postForEntity(url, store, String.class);
         System.out.println(result);
         return result.getBody();

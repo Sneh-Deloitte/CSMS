@@ -41,8 +41,8 @@ public class CustomerController {
         return customerService.updateCustomerById(id, customer);
     }
 
-    @PostMapping("/createCustomer")
-    public Customer createCustomer(@RequestBody Customer customer){
-        return customerService.createCustomer(customer);
-    }
+    // @PostMapping("/createCustomer")
+    // public Customer createCustomer(@RequestBody Customer customer){
+    //     return customerService.createCustomer(customer);
+    // }
 }

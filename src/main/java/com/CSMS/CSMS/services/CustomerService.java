@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface CustomerService {
 
-    public Customer createCustomer(Customer customer);
+    // public Customer createCustomer(Customer customer);
     
     public Customer updateCustomerById(long id, Customer customer);
     

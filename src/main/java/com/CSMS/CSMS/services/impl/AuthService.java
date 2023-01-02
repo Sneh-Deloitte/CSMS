@@ -1,6 +1,8 @@
 package com.CSMS.CSMS.services.impl;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+
+import com.CSMS.CSMS.ConsumeAPI.ApiService;
 import com.CSMS.CSMS.Repository.CustomerRepo;
 import com.CSMS.CSMS.exception.CustomException;
 import com.CSMS.CSMS.exception.InvalidRequest;
@@ -17,9 +19,12 @@ import org.springframework.stereotype.Service;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,6 +33,9 @@ import java.util.regex.Pattern;
 public class AuthService {
     @Autowired
     private CustomerRepo userRepository;
+
+    @Autowired
+    private ApiService apiService;
 
     private final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
@@ -70,11 +78,21 @@ public class AuthService {
         String ocppTag = RandomString.getAlphaNumericString(10);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MONTH, 1);
+        Date input = calendar.getTime();
+        LocalDate da = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         Date expDate = calendar.getTime();
         // sign up user
         String hashedPassword = BCrypt.withDefaults().hashToString(10, request.password.toCharArray());
         Customer savedUser = this.userRepository.save(new Customer(request.roleId, request.customerEmail, request.customerFirstName, request.customerLastName, request.dobCustomer, request.customerGender, request.customerNationality, request.customerPhone, ocppTag, ocppTag, expDate, hashedPassword));
         String token = generateJWTToken(request.customerEmail);
+        // String expiryTime=booking.getDate()+"T"+booking.getEnd_time()+":00";
+        HashMap<String,String> store = new HashMap<>();
+        store.put("idTag",ocppTag);
+        store.put("parentIdTag",ocppTag);
+        store.put("expiryDate",String.valueOf(da));
+        store.put("note", "Added");
+        store.put("maxActiveTransactionCount","99");
+        String getResult= apiService.addOcppTag(store);
         // return the response
         return new AuthResponse(savedUser.getCustomer_email(), savedUser.getCustomer_firstName(), savedUser.getCustomer_phone(), token);
 

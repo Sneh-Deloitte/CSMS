@@ -33,9 +33,6 @@ public class BookingImpl implements BookingService {
     private CustomerRepo customerRepo;
     @Override
     public Booking createBooking(Booking booking) {
-
-        // Rest api call for central system to follow ocpp protocol-> Reserve Now
-
         try {
             String[] start = booking.getStart_time().split(":", 2);
             String[] end = booking.getEnd_time().split(":", 2);
@@ -61,10 +58,10 @@ public class BookingImpl implements BookingService {
             throw new NotFoundException("Data as expected");
         }
         catch (NotFoundException e){
-            throw new NotFoundException(e.getMessage());
+            throw new NotFoundException(e.getMessage()+"SSSSSSSSSSSSSSSS");
         }
         catch (Exception e){
-            throw new NotFoundException(e.getMessage());
+            throw new NotFoundException(e.getMessage()+"PPPPPPPPPPPPPPPPPPPPP");
         }
 
     }

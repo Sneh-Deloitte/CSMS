@@ -19,19 +19,19 @@ public class CustomerImpl implements CustomerService {
     @Autowired
     private ApiService apiService;
 
-    @Override
-    public Customer createCustomer(Customer customer) {
-        // String expiryTime=booking.getDate()+"T"+booking.getEnd_time()+":00";
-        HashMap<String,String> store = new HashMap<>();
-        store.put("idTag", customer.getOcpp_tag());
-        store.put("parentIdTag",customer.getParentIdTag());
-        store.put("expiryDate",String.valueOf(customer.getExp_date_ocpp()));
-        store.put("note", "Added");
-        store.put("maxActiveTransactionCount","99");
-        String getResult= apiService.addOcppTag(store);
-        System.out.println(getResult);
-        return customerRepo.save(customer);
-    }
+    // @Override
+    // public Customer createCustomer(Customer customer) {
+    //     // String expiryTime=booking.getDate()+"T"+booking.getEnd_time()+":00";
+    //     HashMap<String,String> store = new HashMap<>();
+    //     store.put("idTag", customer.getOcpp_tag());
+    //     store.put("parentIdTag",customer.getParentIdTag());
+    //     store.put("expiryDate",String.valueOf(customer.getExp_date_ocpp()));
+    //     store.put("note", "Added");
+    //     store.put("maxActiveTransactionCount","99");
+    //     String getResult= apiService.addOcppTag(store);
+    //     System.out.println(getResult);
+    //     return customerRepo.save(customer);
+    // }
 
     @Override
     public Customer updateCustomerById(long id, Customer customer) {

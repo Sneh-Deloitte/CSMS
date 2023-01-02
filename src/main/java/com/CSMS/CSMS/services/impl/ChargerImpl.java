@@ -105,7 +105,6 @@ public class ChargerImpl implements ChargerService {
         Integer chargerId= Integer.parseInt(chargerDetails[1]);
         List<Booking> list=bookingRepo.findBookingByChargerId(chargerId);
         for(Booking b:list){
-            // System.out.println(b.getBooking_id());
             bookingService.cancelBooking(b.getId());
         }
         return chargerName;

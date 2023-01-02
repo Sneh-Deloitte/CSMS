@@ -100,7 +100,6 @@ public class StationImpl implements StationService {
         return  false;
 }
     public List<Station> getStationByMail(String mail){
-        // System.out.println(mail);
         List<Station> list=stationRepo.getAllStationByMail(mail);
         System.out.println(mail);
         return list;

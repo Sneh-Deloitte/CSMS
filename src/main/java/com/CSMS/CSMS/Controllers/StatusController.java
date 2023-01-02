@@ -34,7 +34,6 @@ public class StatusController {
     @PostMapping("/status/add")
     public Status addStatus(@RequestBody Status status)
     {
-        System.out.println("********************************************");
         return statusService.addStatus(status);
     }
 
