@@ -39,11 +39,11 @@ public class ConnectorController {
     {
         return connectorService.addConnector(connector);
     }
-    // @PutMapping("/connector/{id}")
-// public Connector udpateConnector(@PathVariable Integer id, @RequestBody Connector connector)
-// {
-// return connectorService.updateConnector(id, connector);
-// }
+    @PutMapping("/connector/{id}")
+public Connector udpateConnector(@PathVariable Integer id, @RequestBody Connector connector)
+{
+return connectorService.updateConnector(id, connector);
+}
     @DeleteMapping("/connector/{id}")
     public ResponseEntity<HttpStatus> deleteConnector(@PathVariable Integer id){
         connectorService.deleteConnector(id);

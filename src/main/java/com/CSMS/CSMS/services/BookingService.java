@@ -8,8 +8,8 @@ import java.util.Date;
 public interface BookingService {
 
     public Booking createBooking(Booking booking);
-    // public Booking updateBooking(long id, Booking booking);
-    // public String deleteBooking(long id);
+    public Booking updateBooking(long id, Booking booking);
+    public String deleteBooking(long id);
     public String cancelBooking(long id);
     public List<Booking> getAllBookings();
     public Optional<Booking> getBookingById(long id);

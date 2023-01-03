@@ -7,9 +7,9 @@ public interface ConnectorService {
     
     public Connector addConnector(Connector connector);
     
-    // public void deleteConnector(Integer id);
+    public void deleteConnector(Integer id);
     
-    // public Connector updateConnector(Integer id,Connector connector);
+    public Connector updateConnector(Integer id,Connector connector);
     
     public Connector getConnector(Integer id);
 }

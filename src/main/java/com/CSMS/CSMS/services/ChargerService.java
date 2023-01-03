@@ -11,9 +11,9 @@ public interface ChargerService {
 
     public Charger getChargerById(long id);
 
-    // public Charger updateChargerById(long id, Charger charger);
+    public Charger updateChargerById(long id, Charger charger);
 
-    // public void deleteChargerById(long id);
+    public void deleteChargerById(long id);
 
     public Charger addCharger(Charger charger);
 

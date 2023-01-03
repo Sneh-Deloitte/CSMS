@@ -13,9 +13,9 @@ public interface StationService {
 
     public Station getChargingStationById(long id);
 
-    // public Station updateChargingStationById(long id, Station station);
+    public Station updateChargingStationById(long id, Station station);
 
-    // public void deleteChargingStation(long id);
+    public void deleteChargingStation(long id);
 
     public Station addChargingStation(Station station);
 
