@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import com.CSMS.CSMS.ConsumeAPI.ApiService;
 import com.CSMS.CSMS.Repository.ChargerRepo;
 import com.CSMS.CSMS.Repository.ConnectorRepo;
+import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Connector;
 import java.util.List;
@@ -54,16 +55,18 @@ public class ConnectorController {
         try{
         List<Integer> connectors= apiService.getAllConnectors(chargerId);
         Charger charger= chargerRepo.getChargerByName(chargerId).get(0);
-        for(int i=0; i< connectors.size(); i++){
-            Connector connector=new Connector();
-            connector.setConnector_id(connectors.get(i));
-            connector.setCharger_id(charger.getId().intValue());
-            connectorRepo.save(connector);
-        }
+        // List<Charger> charger= chargerRepo.getChargerByName(chargerId);
+        System.out.println(charger);
+        // for(int i=0; i< connectors.size(); i++){
+        //     Connector connector=new Connector();
+        //     connector.setConnector_id(connectors.get(i));
+        //     connector.setCharger_id(charger.getId().intValue());
+        //     connectorRepo.save(connector);
+        // }
         return apiService.getAllConnectors(chargerId);
     }
     catch(Exception e){
-        return apiService.getAllConnectors(chargerId); 
+        throw new NotFoundException(e); 
     }
     }
 }

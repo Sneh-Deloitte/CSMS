@@ -37,6 +37,20 @@ public class BookingImpl implements BookingService {
     @Override
     public Booking createBooking(Booking booking) {
         try {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             if(booking.getConnector_id()!=1 && booking.getConnector_id()!=2){
                 throw new NotFoundException("Connector_Id isn't as expected");
             }
@@ -72,32 +86,33 @@ public class BookingImpl implements BookingService {
         }
 
     }
-    @Override
-    public Booking updateBooking(long id, Booking booking) {
-        Booking booking1 = bookingRepo.findById(id).orElseThrow(()-> new NotFoundException("Charger is not found with id" +id));
-        if(booking.getCost() != 0) booking1.setCost(booking.getCost());
-        if(booking.getEnd_time() != "") booking1.setEnd_time(booking.getEnd_time());
-        if(booking.getPayment_mode() != null) booking1.setPayment_mode(booking.getPayment_mode());
-        if(booking.getPayment_status() != 0) booking1.setPayment_status(booking.getPayment_status());
-        if(booking.getStart_time() != null) booking1.setStart_time(booking.getStart_time());
-        if(booking.getDate() != null) booking1.setDate(booking.getDate());
-        return bookingRepo.save(booking1);
-    }
 
-    @Override
-    public String deleteBooking(long id) {
+    // @Override
+    // public Booking updateBooking(long id, Booking booking) {
+    //     Booking booking1 = bookingRepo.findById(id).orElseThrow(()-> new NotFoundException("Charger is not found with id" +id));
+    //     if(booking.getCost() != 0) booking1.setCost(booking.getCost());
+    //     if(booking.getEnd_time() != "") booking1.setEnd_time(booking.getEnd_time());
+    //     if(booking.getPayment_mode() != null) booking1.setPayment_mode(booking.getPayment_mode());
+    //     if(booking.getPayment_status() != 0) booking1.setPayment_status(booking.getPayment_status());
+    //     if(booking.getStart_time() != null) booking1.setStart_time(booking.getStart_time());
+    //     if(booking.getDate() != null) booking1.setDate(booking.getDate());
+    //     return bookingRepo.save(booking1);
+    // }
 
-        // Rest api call for central system to follow ocpp protocol-> Cancel Reservation
+    // @Override
+    // public String deleteBooking(long id) {
 
-        try {
-            bookingRepo.deleteById(id);
-            return ("Deleted booking with id: "+id) ;
-        }
-        catch (Exception e){
-            return ("No booking found with id: " +id);
-        }
+    //     // Rest api call for central system to follow ocpp protocol-> Cancel Reservation
 
-    }
+    //     try {
+    //         bookingRepo.deleteById(id);
+    //         return ("Deleted booking with id: "+id) ;
+    //     }
+    //     catch (Exception e){
+    //         return ("No booking found with id: " +id);
+    //     }
+
+    // }
     @Override
     public String cancelBooking(long id){
         try{

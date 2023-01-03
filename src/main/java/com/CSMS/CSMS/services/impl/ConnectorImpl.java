@@ -19,14 +19,14 @@ public class ConnectorImpl implements ConnectorService {
     public Connector addConnector(Connector status) {
         return connectorRepo.save(status);
     }
-    @Override
-    public void deleteConnector(Integer id) {
-        try {
-            connectorRepo.deleteById(id);
-        } catch (Exception exception) {
-            throw new NotFoundException("Status not found with id " + id);
-        }
-    }
+    // @Override
+    // public void deleteConnector(Integer id) {
+    //     try {
+    //         connectorRepo.deleteById(id);
+    //     } catch (Exception exception) {
+    //         throw new NotFoundException("Status not found with id " + id);
+    //     }
+    // }
     // @Override
     // public Connector updateConnector(Integer id, Connector connector) {
     //     Connector connector1 = connectorRepo.findById(id).orElseThrow(() -> new NotFoundException("status not found with id" + id));
