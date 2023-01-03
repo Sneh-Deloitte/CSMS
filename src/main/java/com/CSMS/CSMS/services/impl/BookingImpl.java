@@ -9,6 +9,7 @@ import com.CSMS.CSMS.models.Booking;
 import com.CSMS.CSMS.models.Charger;
 import com.CSMS.CSMS.models.Customer;
 import com.CSMS.CSMS.services.BookingService;
+import com.CSMS.CSMS.services.CustomerService;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +29,21 @@ public class BookingImpl implements BookingService {
     @Autowired
     private ApiService apiService;
     @Autowired
+    private CustomerService customerService;
+    @Autowired
     private ChargerRepo chargerRepo;
     @Autowired
     private CustomerRepo customerRepo;
     @Override
     public Booking createBooking(Booking booking) {
         try {
+            if(booking.getConnector_id()!=1 && booking.getConnector_id()!=2){
+                throw new NotFoundException("Connector_Id isn't as expected");
+            }
             String[] start = booking.getStart_time().split(":", 2);
             String[] end = booking.getEnd_time().split(":", 2);
             String[] date= booking.getDate().split("-",3);
+            customerService.getCustomerById(booking.getCustomer_id());
             if (date[0].length()!=4 || date[1].length()!=2 || date[2].length()!=2 || booking.getDate().length()!=10){
                 throw new NotFoundException("Date isn't as expected");
             }
@@ -58,10 +65,10 @@ public class BookingImpl implements BookingService {
             throw new NotFoundException("Data as expected");
         }
         catch (NotFoundException e){
-            throw new NotFoundException(e.getMessage()+"SSSSSSSSSSSSSSSS");
+            throw new NotFoundException(e.getMessage());
         }
         catch (Exception e){
-            throw new NotFoundException(e.getMessage()+"PPPPPPPPPPPPPPPPPPPPP");
+            throw new NotFoundException(e.getMessage());
         }
 
     }

@@ -66,7 +66,7 @@ public class CustomerImpl implements CustomerService {
 
     @Override
     public Customer getCustomerById(long id) {
-        Customer customer = customerRepo.findById(id).orElseThrow(() -> new NotFoundException("charger not found" + id));
+        Customer customer = customerRepo.findById(id).orElseThrow(() -> new NotFoundException("Customer not found with id " + id));
         return customer;
     }
 }
