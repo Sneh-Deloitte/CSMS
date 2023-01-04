@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StatusService {
 
-    public List<Status> getAllStatus();
+    public List<Status> getAllStatusByStationId(int station_id);
 
     public Status addStatus(Status status);
 

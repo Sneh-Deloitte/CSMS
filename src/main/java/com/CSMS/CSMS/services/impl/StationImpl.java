@@ -50,14 +50,8 @@ public class StationImpl implements StationService {
     @Override
     public  Station updateChargingStationById(long id, Station station){
         Station station1 = stationRepo.findById(id).orElseThrow(() -> new NotFoundException("Station not found with id" + id));
-        if(station.getAddress() != null) station1.setAddress(station.getAddress());
-        if(station.getCity() != null) station1.setCity(station.getCity());
-        if(station.getContact_no() != 0) station1.setContact_no(station.getContact_no());
-        if(station.getName() != null) station1.setName(station.getName());
-        if(station.getEmail_id() != null) station1.setEmail_id(station.getEmail_id());
         if(station.getLongitude() != 0) station1.setLongitude(station.getLongitude());
         if(station.getLatitude() != 0) station1.setLatitude(station.getLatitude());
-        if(station.getImage_url() != null) station1.setImage_url(station.getImage_url());
         return stationRepo.save(station1);
     }
 

@@ -14,11 +14,11 @@ public class StatusController {
     @Autowired
     private StatusService statusService;
 
-    @GetMapping("/status/all")
-    public List<Status> getAllStatus()
-    {
-        return statusService.getAllStatus();
-    }
+    // @GetMapping("/status/all")
+    // public List<Status> getAllStatus()
+    // {
+    //     return statusService.getAllStatus();
+    // }
 
     // @GetMapping("/status/{id}")
     // public Status getStatusById(@PathVariable Integer id)
@@ -48,5 +48,10 @@ public class StatusController {
     @PostMapping("/statusNotification")
     public String statusNotification(@RequestBody HashMap<String, String> store){
         return statusService.statusNotification(store);
+    }
+
+    @GetMapping("/getAllStatusByStationId/{station_id}")
+    public List<Status> getAllStatusByStationId(@PathVariable int station_id){
+        return statusService.getAllStatusByStationId(station_id);
     }
 }

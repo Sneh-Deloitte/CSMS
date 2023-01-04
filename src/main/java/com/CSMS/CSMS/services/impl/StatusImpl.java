@@ -25,8 +25,10 @@ public class StatusImpl implements StatusService {
     private BookingService bookingService;
 
     @Override
-    public List<Status> getAllStatus() {
-        return statusRepo.findAll();
+    public List<Status> getAllStatusByStationId(int stationId) {
+        List<Status> allStatus=statusRepo.findAll();
+        List<Status> allStatusByStationId=allStatus.stream().filter(c->c.getChargeBoxIdName().split(",",3)[0].equals(String.valueOf(stationId))).collect(Collectors.toList());
+        return allStatusByStationId;
     }
 
     @Override
@@ -45,7 +47,7 @@ public class StatusImpl implements StatusService {
 
     @Override
     public Status updateStatus(Status status) {
-            Status status1 = statusRepo.getStatusByChargeBoxId(status.getChargeBoxIdName());
+            Status status1 = statusRepo.getStatusByChargeBoxId(status.getChargeBoxIdName()).get();
             status1.setErrorCode(status.getErrorCode());
             return statusRepo.save(status1);
     }
@@ -67,11 +69,11 @@ public class StatusImpl implements StatusService {
                 c.getDate().compareTo(startDate)>0 || (c.getDate().compareTo(startDate)==0 && c.getStart_time().compareTo(startTime)>=0)).collect(Collectors.toList());
             bookingWithDateTime.forEach(c->bookingService.cancelBooking(c.getId()));
         }
-        if(statusRepo.getStatusByChargeBoxId(store.get("chargeBoxId")).equals(null)){
-            addStatus(new Status(store.get("errorCode"),store.get("chargeBoxId")));
+        if(statusRepo.getStatusByChargeBoxId(store.get("chargeBoxId")).isPresent()){
+            updateStatus(new Status(store.get("errorCode"),store.get("chargeBoxId")));
         }
         else{
-            updateStatus(new Status(store.get("errorCode"),store.get("chargeBoxId")));
+            addStatus(new Status(store.get("errorCode"),store.get("chargeBoxId")));
         }
         return store.get("errorCode");
     }
