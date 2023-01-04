@@ -37,20 +37,6 @@ public class BookingImpl implements BookingService {
     @Override
     public Booking createBooking(Booking booking) {
         try {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             if(booking.getConnector_id()!=1 && booking.getConnector_id()!=2){
                 throw new NotFoundException("Connector_Id isn't as expected");
             }
