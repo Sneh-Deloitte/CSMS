@@ -14,13 +14,15 @@ import javax.persistence.*;
 @Table(name = "status")
 public class Status {
     @Id
-    @Column(name = "status_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private  int status_id;
 
-    private String status_description;
+    private String chargeBoxIdName;
+    private String errorCode;
 
-    public Status(int status_id, String status_description) {
-        this.status_id=status_id;
-        this.status_description = status_description;
+    public Status(String errorCode, String chargeBoxIdName) {
+        this.errorCode = errorCode;
+        this.chargeBoxIdName= chargeBoxIdName;
     }
 }

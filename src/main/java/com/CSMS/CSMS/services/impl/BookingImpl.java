@@ -109,7 +109,7 @@ public class BookingImpl implements BookingService {
             String date = booking.getDate();
             String currentTime = getCurrentTime();
             String finalDateAccessed=date+" "+startTime+":00";
-            System.out.println(getCurrentTime());
+            // System.out.println(getCurrentTime());
             DateTimeFormatter f = DateTimeFormatter.ofPattern( "uuuu-MM-dd HH:mm:ss" );
             DateTimeFormatter g = DateTimeFormatter.ofPattern( "uuuu/MM/dd HH:mm:ss" );
             LocalDateTime currentDate = LocalDateTime.parse( currentTime , g ) ;

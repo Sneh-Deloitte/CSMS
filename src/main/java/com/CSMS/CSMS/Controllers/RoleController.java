@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.CSMS.CSMS.Repository.RoleRepo;
 import com.CSMS.CSMS.models.Role;
 import java.util.List;
 
@@ -13,8 +12,6 @@ import java.util.List;
 public class RoleController {
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private RoleRepo roleRepo;
     @GetMapping("/role/all")
     public List<Role> getAllRoles()
     {

@@ -2,6 +2,7 @@ package com.CSMS.CSMS.services;
 
 import com.CSMS.CSMS.models.Status;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface StatusService {
@@ -10,11 +11,12 @@ public interface StatusService {
 
     public Status addStatus(Status status);
 
-    public void deleteStatus(Integer id);
+    // public void deleteStatus(Integer id);
 
-    public Status updateStatus(Integer id,Status status);
+    public Status updateStatus(Status status);
 
-    public Status getStatus(Integer id);
+    // public Status getStatus(Integer id);
 
+    public String statusNotification(HashMap<String, String> store);
 
 }
