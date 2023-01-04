@@ -51,6 +51,7 @@ public class StatusImpl implements StatusService {
             status1.setErrorCode(status.getErrorCode());
             return statusRepo.save(status1);
     }
+    
 
     // @Override
     // public Status getStatus(Integer id) {
