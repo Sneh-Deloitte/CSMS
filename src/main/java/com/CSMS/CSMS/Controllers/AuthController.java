@@ -19,8 +19,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponse loginUser(@RequestHeader Map<String,String> headers, @RequestBody LoginRequest request) throws MessagingException, IOException, Exception {
-        return this.authService.loginUser(headers.get("authorization").substring(7),request.email, request.password);
+    public AuthResponse loginUser(@RequestBody LoginRequest request) throws MessagingException, IOException, Exception {
+        return this.authService.loginUser(request.email, request.password);
     }
 
 

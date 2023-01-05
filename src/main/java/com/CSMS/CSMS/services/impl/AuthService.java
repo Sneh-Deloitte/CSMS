@@ -39,7 +39,7 @@ public class AuthService {
 
     private final Logger logger = LoggerFactory.getLogger(AuthService.class);
 
-    public AuthResponse loginUser(String jwtToken, String email, String password) throws MessagingException, IOException, Exception {
+    public AuthResponse loginUser(String email, String password) throws MessagingException, IOException, Exception {
         this.logger.info(email + " LOGIN REQUEST");
         this.validateData(email, password);
 
@@ -59,9 +59,9 @@ public class AuthService {
         }
         // user has entered correct details, generate token and send response
         String token = this.generateJWTToken(user.getCustomer_email());
-        if(!token.equals(jwtToken)){
-            throw new Exception("UnAuthorized");
-        }
+        // if(!token.equals(jwtToken)){
+        //     throw new Exception("UnAuthorized");
+        // }
         return new AuthResponse(user.getRole_id(),user.getCustomer_email(), user.getCustomer_firstName(), user.getCustomer_phone(), token);
 
     }
