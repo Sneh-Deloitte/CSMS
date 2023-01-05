@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.CSMS.CSMS.Repository.MaintenanceRepo;
 import com.CSMS.CSMS.Repository.StatusRepo;
+import com.CSMS.CSMS.exception.NotFoundException;
 import com.CSMS.CSMS.models.Maintenance;
 import com.CSMS.CSMS.services.MaintenanceService;
 
@@ -31,19 +32,21 @@ public class MaintenanceImpl implements MaintenanceService{
     }
 
     @Override
-    public void closeMaintenanceTicket(String ticketNo){
+    public String closeMaintenanceTicket(String ticketNo){
         Maintenance maintenance=maintenanceRepo.findByTicketNo(ticketNo);
         maintenance.setStatus("Closed");
         maintenanceRepo.save(maintenance);
+        try{
         statusRepo.deleteByChargerBoxName(ticketNo.split("-",2)[0]);
-
+    }    
+        catch(Exception e){
+            throw new NotFoundException("Data already deleted");
+        }
+        return "Done";
     }
 
     @Override
     public List<Maintenance> getAllMaintenanceTicket(){
-        Maintenance all=maintenanceRepo.findByTicketNo("1,1,Tesla-yInNhD");
-        List<Maintenance> alll= new ArrayList<Maintenance>();
-        alll.add(all);
-        return alll;
+        return maintenanceRepo.findAll();
     }
 }

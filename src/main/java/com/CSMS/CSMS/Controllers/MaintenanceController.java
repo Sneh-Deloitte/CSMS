@@ -32,8 +32,8 @@ public class MaintenanceController {
     }
     
     @PostMapping("/closeMaintenanceTicket/{ticketNo}")
-    private void closeMaintenanceTicket(@PathVariable String ticketNo){
-        maintenanceService.closeMaintenanceTicket(ticketNo);
+    private String closeMaintenanceTicket(@PathVariable String ticketNo){
+        return maintenanceService.closeMaintenanceTicket(ticketNo);
     }
 
     @PostMapping("/getAllMaintenanceTicket")

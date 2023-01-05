@@ -13,7 +13,7 @@ public interface MaintenanceService {
 
     public void addMaintenanceTicket(Maintenance maintenance);
 
-    public void closeMaintenanceTicket(String ticketNo);
+    public String closeMaintenanceTicket(String ticketNo);
 
     public List<Maintenance> getAllMaintenanceTicket();
 
