@@ -43,7 +43,7 @@ public class BookingImpl implements BookingService {
             String[] start = booking.getStart_time().split(":", 2);
             String[] end = booking.getEnd_time().split(":", 2);
             String[] date= booking.getDate().split("-",3);
-            customerService.getCustomerById(booking.getCustomer_id());
+            customerService.getCustomerByMailId(booking.getCustomerMailId());
             if (date[0].length()!=4 || date[1].length()!=2 || date[2].length()!=2 || booking.getDate().length()!=10){
                 throw new NotFoundException("Date isn't as expected");
             }
@@ -133,7 +133,7 @@ public class BookingImpl implements BookingService {
     public String cancelReservation(Long id){
         Booking booking = bookingRepo.getById(id);
         Charger charger= chargerRepo.getById((long)booking.getCharger_id());
-        Customer customer =customerRepo.getById((long) booking.getCustomer_id());
+        Customer customer =customerRepo.findByCustomerEmail(booking.getCustomerMailId());
         String ocppTagOfCustomer=customer.getOcpp_tag();
         List<ReservationResponse> getallreservationofocpptag=apiService.getAllReservationOfOcppTag(ocppTagOfCustomer);
             String EndTime= booking.getDate()+"T"+booking.getEnd_time()+":00.000Z";
@@ -157,8 +157,13 @@ public class BookingImpl implements BookingService {
     }
 
     @Override
-    public Optional<Booking> getBookingById(long id) {
-        return bookingRepo.findById(id);
+    public List<Booking> getBookingByMailId(String mailId) {
+        try{
+        return bookingRepo.findBookingByMailId(mailId);
+        }
+        catch(Exception e){
+            throw new NotFoundException("Booking not found with mail id: " + mailId);
+        }
     }
 
     @Override

@@ -31,6 +31,8 @@ public interface BookingRepo extends JpaRepository<Booking,Long> {
     @Query(value = "SELECT * FROM booking WHERE customer_id=?1",nativeQuery = true)
     List<Booking> findBookingByCustomerId(int customerId);
 
+    @Query(value = "SELECT * FROM booking WHERE customer_mail_id=?1",nativeQuery = true)
+    List<Booking> findBookingByMailId(String email_id);
 
 
 }

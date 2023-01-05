@@ -14,6 +14,6 @@ public interface CustomerService {
     
     public List<Customer> getAllCustomers();
     
-    public Customer getCustomerById(long id);
+    public Customer getCustomerByMailId(String id);
 
 }

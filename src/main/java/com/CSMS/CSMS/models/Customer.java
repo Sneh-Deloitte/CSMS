@@ -46,5 +46,9 @@ public class Customer {
         this.exp_date_ocpp = exp_date_ocpp;
         this.password = password;
     }
+
+    public Customer orElseThrow(Object object) {
+        return null;
+    }
 }
 

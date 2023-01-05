@@ -22,8 +22,8 @@ public class CustomerController {
     private ActiveReservationService activeReservationService;
 
     @GetMapping("/customer/{id}")
-    public Customer getCustomerById(@PathVariable long id){
-        return customerService.getCustomerById(id);
+    public Customer getCustomerById(@PathVariable String id){
+        return customerService.getCustomerByMailId(id);
     }
 
     @GetMapping("/GetAllCustomers")

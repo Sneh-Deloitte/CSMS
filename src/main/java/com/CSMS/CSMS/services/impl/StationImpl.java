@@ -46,7 +46,6 @@ public class StationImpl implements StationService {
         return stationRepo.findById(id).orElseThrow(() -> new NotFoundException("Station not found with id" + id));
     }
 
-
     @Override
     public  Station updateChargingStationById(long id, Station station){
         Station station1 = stationRepo.findById(id).orElseThrow(() -> new NotFoundException("Station not found with id" + id));

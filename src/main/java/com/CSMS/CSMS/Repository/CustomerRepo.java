@@ -13,5 +13,5 @@ public interface CustomerRepo extends JpaRepository<Customer, Long> {
     @Query(value = "select count(*) from customer where customer_email = ?1 or customer_phone = ?2", nativeQuery = true)
     int countOfUsersByEmailOrMobile(String email, String mobile);
     @Query(value = "select * from customer where customer_email = ?1", nativeQuery = true)
-    Optional<Customer>  findByCustomerEmail(String email);
+    Customer findByCustomerEmail(String email);
 }

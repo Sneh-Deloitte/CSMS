@@ -44,12 +44,10 @@ public class AuthService {
         this.validateData(email, password);
 
         // find if user is present in database to authenticate
-        Optional<Customer> userContainer = this.userRepository.findByCustomerEmail(email);
-        if (userContainer.isEmpty()) {
-            throw new CustomException("User with email " + email + " does not exist");
-        }
+        try{
+        Customer user = this.userRepository.findByCustomerEmail(email);
 
-        Customer user = userContainer.get();
+        // Customer user = userContainer.get();
         // user exists in database, check if login password is correct
         String hashedPassword = user.getPassword();
         if (!BCrypt.verifyer().verify(password.toCharArray(), hashedPassword).verified) {
@@ -63,6 +61,10 @@ public class AuthService {
         //     throw new Exception("UnAuthorized");
         // }
         return new AuthResponse(user.getRole_id(),user.getCustomer_email(), user.getCustomer_firstName(), user.getCustomer_phone(), token);
+        }
+        catch(Exception e){
+            throw new CustomException("User with email " + email + " does not exist");
+        }
 
     }
 

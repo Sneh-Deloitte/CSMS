@@ -106,7 +106,7 @@ public class ActiveReservationImpl implements ActiveReservationService {
         Charger charger = chargerRepo.getById((long) booking.getCharger_id());
 
         //get tag from custometable
-        Customer customer =customerRepo.getById((long) booking.getCustomer_id());
+        Customer customer =customerRepo.findByCustomerEmail(booking.getCustomerMailId());
         HashMap<String,String> store = new HashMap<>();
         store.put("chargerName",charger.getCharger_name());
         store.put("customerTag",customer.getOcpp_tag());

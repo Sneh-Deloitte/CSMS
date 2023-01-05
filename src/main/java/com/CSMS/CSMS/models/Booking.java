@@ -22,7 +22,7 @@ public class Booking {
 
     //Include User Id
 
-    private Long customer_id;
+    private String customerMailId;
     private String start_time;
     private String end_time;
     private int cost;
@@ -36,8 +36,8 @@ public class Booking {
     private String bookingStatus;
     // private String chargerName;
 
-    public Booking(String bookingStatus,Long customer_id, String booking_id, int station_id, int charger_id, int connector_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
-        this.customer_id = customer_id;
+    public Booking(String bookingStatus,String customerMailId, String booking_id, int station_id, int charger_id, int connector_id, String start_time, String end_time, int cost, String payment_mode, int payment_status, String date) {
+        this.customerMailId = customerMailId;
         this.booking_id = booking_id;
         this.station_id = station_id;
         this.charger_id = charger_id;
@@ -59,15 +59,6 @@ public class Booking {
     public void setId(Long id) {
         this.id = id;
     }
-
-    public Long getCustomer_id() {
-        return customer_id;
-    }
-
-    public void setCustomer_id(Long customer_id) {
-        this.customer_id = customer_id;
-    }
-
     public String getBooking_id() {
         return booking_id;
     }

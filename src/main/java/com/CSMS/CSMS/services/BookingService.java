@@ -12,7 +12,7 @@ public interface BookingService {
     public String deleteBooking(long id);
     public String cancelBooking(long id);
     public List<Booking> getAllBookings();
-    public Optional<Booking> getBookingById(long id);
+    public List<Booking> getBookingByMailId(String mailId);
     public List<Booking> getBookingByDate(String date);
     public List<Booking> getBookingByStationId(int stationId);
     public List<Booking> getBookingByChargerId(int chargerId);
