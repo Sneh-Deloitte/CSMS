@@ -6,11 +6,13 @@ public class AuthResponse {
     public String name;
     public String token;
     public String mobile;
+    public Integer roleId;
 
-    public AuthResponse(String email, String name, String mobile, String token){
+    public AuthResponse(Integer roleId,String email, String name, String mobile, String token){
         this.email = email;
         this.name = name;
         this.token = token;
         this.mobile = mobile;
+        this.roleId= roleId;
     }
 }

@@ -62,7 +62,7 @@ public class AuthService {
         if(!token.equals(jwtToken)){
             throw new Exception("UnAuthorized");
         }
-        return new AuthResponse(user.getCustomer_email(), user.getCustomer_firstName(), user.getCustomer_phone(), token);
+        return new AuthResponse(user.getRole_id(),user.getCustomer_email(), user.getCustomer_firstName(), user.getCustomer_phone(), token);
 
     }
 
@@ -94,7 +94,7 @@ public class AuthService {
         store.put("maxActiveTransactionCount","99");
         String getResult= apiService.addOcppTag(store);
         // return the response
-        return new AuthResponse(savedUser.getCustomer_email(), savedUser.getCustomer_firstName(), savedUser.getCustomer_phone(), token);
+        return new AuthResponse(savedUser.getRole_id(),savedUser.getCustomer_email(), savedUser.getCustomer_firstName(), savedUser.getCustomer_phone(), token);
 
     }
 
