@@ -72,31 +72,36 @@ public class ChargerImpl implements ChargerService {
 
     @Override
     public Charger addCharger(Charger charger) {
-        Integer count=chargerRepo.countChargerByStationId(charger.getStation_id());
-        charger.setCharger_name(String.valueOf(charger.getStation_id())+","+String.valueOf(count+1)+","+charger.getCharger_name());
-        stationservice.getChargingStationById(charger.getStation_id());
-        ChargePointForm chargePointForm = new ChargePointForm();
-        BigDecimal lonlat = new BigDecimal(0.0);
-        Address address = new Address();
-        address.setCity(stationservice.getChargingStationById(charger.getStation_id()).getCity());
-        address.setStreet(stationservice.getChargingStationById(charger.getStation_id()).getStreet());
-        address.setHouseNumber(stationservice.getChargingStationById(charger.getStation_id()).getHouseNumber());
-        String countryCode=stationservice.getChargingStationById(charger.getStation_id()).getCountry().toUpperCase().substring(0,2);
-        address.setCountry(CountryCode.getByAlpha2Code(countryCode));
-        address.setZipCode(stationservice.getChargingStationById(charger.getStation_id()).getZipCode());
+        if (chargerRepo.findAll().size()<=5){
+            Integer count=chargerRepo.countChargerByStationId(charger.getStation_id());
+            charger.setCharger_name(String.valueOf(charger.getStation_id())+","+String.valueOf(count+1)+","+charger.getCharger_name());
+            stationservice.getChargingStationById(charger.getStation_id());
+            ChargePointForm chargePointForm = new ChargePointForm();
+            BigDecimal lonlat = new BigDecimal(0.0);
+            Address address = new Address();
+            address.setCity(stationservice.getChargingStationById(charger.getStation_id()).getCity());
+            address.setStreet(stationservice.getChargingStationById(charger.getStation_id()).getStreet());
+            address.setHouseNumber(stationservice.getChargingStationById(charger.getStation_id()).getHouseNumber());
+            String countryCode=stationservice.getChargingStationById(charger.getStation_id()).getCountry().toUpperCase().substring(0,2);
+            address.setCountry(CountryCode.getByAlpha2Code(countryCode));
+            address.setZipCode(stationservice.getChargingStationById(charger.getStation_id()).getZipCode());
 
-        chargePointForm.setChargeBoxId(charger.getCharger_name());
-        chargePointForm.setRegistrationStatus("Accepted");
-        chargePointForm.setInsertConnectorStatusAfterTransactionMsg(true);
-        chargePointForm.setAddress(address);
-        chargePointForm.setLocationLatitude(lonlat);
-        chargePointForm.setLocationLongitude(lonlat);
-        chargePointForm.setDescription("Description");
-        chargePointForm.setNote("Registred by CSMS");
-        chargePointForm.setAdminAddress("https://hashedin.com/");
-        apiService.addCharger(chargePointForm);
+            chargePointForm.setChargeBoxId(charger.getCharger_name());
+            chargePointForm.setRegistrationStatus("Accepted");
+            chargePointForm.setInsertConnectorStatusAfterTransactionMsg(true);
+            chargePointForm.setAddress(address);
+            chargePointForm.setLocationLatitude(lonlat);
+            chargePointForm.setLocationLongitude(lonlat);
+            chargePointForm.setDescription("Description");
+            chargePointForm.setNote("Registred by CSMS");
+            chargePointForm.setAdminAddress("https://hashedin.com/");
+            apiService.addCharger(chargePointForm);
 
-        return chargerRepo.save(charger);
+            return chargerRepo.save(charger);
+        }
+        else{
+            throw new NotFoundException("Already 5 chargers in the station");
+        }
     }
 
     @Override
