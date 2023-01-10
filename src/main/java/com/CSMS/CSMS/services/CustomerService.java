@@ -9,6 +9,8 @@ public interface CustomerService {
     // public Customer createCustomer(Customer customer);
     
     public Customer updateCustomerById(long id, Customer customer);
+
+    public Customer getCustomerByRoleId(Integer customer);
     
     public Customer deleteCustomer(long id);
     

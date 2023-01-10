@@ -10,8 +10,13 @@ import java.util.Optional;
 
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
+
     @Query(value = "select count(*) from customer where customer_email = ?1 or customer_phone = ?2", nativeQuery = true)
     int countOfUsersByEmailOrMobile(String email, String mobile);
+
     @Query(value = "select * from customer where customer_email = ?1", nativeQuery = true)
     Customer findByCustomerEmail(String email);
+
+    @Query(value = "select * from customer where role_id = ?1", nativeQuery = true)
+    Customer findByCustomerRoleId(Integer role_id);
 }

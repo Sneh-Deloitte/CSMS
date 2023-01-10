@@ -26,6 +26,11 @@ public class CustomerController {
         return customerService.getCustomerByMailId(id);
     }
 
+    @GetMapping("/customer/{roleId}")
+    public Customer getCustomerByRoleId(@PathVariable Integer roleId){
+        return customerService.getCustomerByRoleId(roleId);
+    }
+
     @GetMapping("/GetAllCustomers")
     public List<Customer> getAllCustomers(){
         return customerService.getAllCustomers();

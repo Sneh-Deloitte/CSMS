@@ -73,4 +73,14 @@ public class CustomerImpl implements CustomerService {
             throw new NotFoundException("Customer not found with id " + id);
         }
     }
+
+    @Override
+    public Customer getCustomerByRoleId(Integer roleId) {
+        try{
+        Customer customer = customerRepo.findByCustomerRoleId(roleId);
+        return customer;}
+        catch(Exception e){
+            throw new NotFoundException("Customer not found with role id " + roleId);
+        }
+    }
 }
