@@ -21,6 +21,7 @@ public class TransactionImpl implements TransactionService {
 
     @Override
     public void addTransaction(Transaction transaction) {
+        System.out.println("______________++++++++++++++++++++++++++++++++");
         transactionRepo.save(transaction);
     }
 
@@ -39,7 +40,8 @@ public class TransactionImpl implements TransactionService {
     @Override
     public void saveStartTransaction(HashMap<String, String> store){
         if(store.get("statusOfTransaction").equals("1")){
-            addTransaction(new Transaction(store.get("chargeBoxIdentity"),Integer.parseInt(store.get("connectorId")),store.get("idTag"), DateTime.parse(store.get("timestamp")), Integer.parseInt(store.get("MeterStart")),Integer.parseInt(store.get("reservationId")),store.get("statusOfTransaction"),null,null,null));
+            System.out.print("++++++++++++++++++++++++++"+store);
+            addTransaction(new Transaction(store.get("chargeBoxIdentity"),Integer.parseInt(store.get("connectorId")),store.get("idTag"), DateTime.parse(store.get("timestamp")), Integer.parseInt(store.get("MeterStart")),Integer.parseInt(store.get("reservationId")),store.get("statusOfTransaction"),DateTime.parse(store.get("timestamp")),"",0));
         }
         else{
             updateTransaction(store);
